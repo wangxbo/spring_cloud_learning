@@ -1,0 +1,15 @@
+server:
+  #config配置服务一般设置端口8888
+  port: 8888
+
+spring:
+  application:
+    name: configServer
+  cloud:
+    #git服务配置信息
+    config:
+      server:
+        git:
+          uri: https://github.com/wangxbo/spring-cloud-config.git
+          #从以下文件夹下下面查找配置文件
+          search-paths: dev*,test*

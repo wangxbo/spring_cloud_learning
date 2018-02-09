@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: config-client
+  profiles:
+    #选择使用下面哪个配置项
+    active: service2
+   #服务配置信息
+  cloud:
+    config:
+      #此处的config.profile会根据生效的active设置对应的值
+      profile: ${config.profile}
+      name: hello
+      uri: http://localhost:8888
+
+
+
+#将不同的配置组以---分割，并通过spring.profiles定义每组的名字，方便后续引用
+---
+spring:
+  profiles: service1
+config:
+  profile: test
+
+---
+spring:
+  profiles: service2
+config:
+  profile: dev
+
+
+  ##关闭管理端actuator 的安全, /env  /health 放开
+management:
+  security:
+    enabled: false

@@ -1,0 +1,3 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration= \
+  com.bxw.lesson2.bootstrap.MyConfiguration,\
+  com.bxw.lesson2.bootstrap.MyPropertySourceLocator

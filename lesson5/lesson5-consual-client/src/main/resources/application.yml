@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-cloud-consul
+  ## 连接consul 服务器配置
+  cloud:
+    consul:
+      host: localhost
+      port: 8088
+      discovery:
+      ##调整Health check 路径，使其传递到 Consul 服务器，帮助回调
+        health-check-path: /check
+
+server:
+  port: 8080
+
+## 管理安全失效
+management:
+  security:
+    enabled: false
+
+

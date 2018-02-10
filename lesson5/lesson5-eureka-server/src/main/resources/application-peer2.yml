@@ -1,0 +1,16 @@
+##节点2完整配置
+server:
+  port: 9091
+
+## peer1 主机：localhost  端口：9090
+peer1:
+  server:
+    host: localhost
+    port: 9090
+
+## Eureka注册信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${peer1.server.host}:${peer1.server.port}/eureka
+

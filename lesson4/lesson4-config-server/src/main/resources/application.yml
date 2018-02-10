@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: spring-cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          ## 配置服务器远程 Git 仓库（GitHub）
+          uri: https://github.com/wangxbo/spring-cloud-config
+          #从以下文件夹下下面查找配置文件
+          search-paths: dev*,test*
+          ## 强制拉去 Git 内容
+          force-pull: true
+
+server:
+  port: 7070
+
+## 关闭管理端actuator 的安全## /env /health 端口完全开放
+management:
+  security:
+    enabled: false
+
+eureka:
+  client:
+    service-url:
+              defaultZone: http://localhost:9090/eureka
+
+
+
+
+

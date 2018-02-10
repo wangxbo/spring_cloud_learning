@@ -1,0 +1,39 @@
+spring:
+  profiles:
+      #选择使用下面哪个配置项
+      active: service2
+     #服务配置信息
+  cloud:
+    config:
+      #此处的config.profile会根据生效的active设置对应的值
+      profile: ${config.profile}
+      name: hello
+      discovery:
+        ##激活Config服务器发现
+        enabled: true
+        ##配置Config服务器的应用名称
+        service-id: spring-cloud-config-server
+
+
+#将不同的配置组以---分割，并通过spring.profiles定义每组的名字，方便后续引用
+---
+spring:
+  profiles: service1
+config:
+  profile: test
+
+---
+spring:
+  profiles: service2
+config:
+  profile: dev
+
+
+eureka:
+  client:
+    service-url:
+          defaultZone: http://localhost:9090/eureka
+
+
+
+

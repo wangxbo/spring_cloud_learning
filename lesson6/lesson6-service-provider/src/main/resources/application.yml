@@ -1,0 +1,15 @@
+##服务提供方
+spring:
+  application:
+    name: spring-cloud-service-provider
+server:
+  port: 9090
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka/
+    ##暂时关闭Eureka注册，当使用Eureka注册发现时，注释掉
+    ##enabled: false

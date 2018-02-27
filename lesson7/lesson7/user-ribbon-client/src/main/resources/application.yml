@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: user-ribbon-client
+server:
+  port: 8080
+##服务提供信息
+provider:
+  service:
+    name: user-service-provider
+    host: localhost
+    port: 9090
+
+##关闭Eureka Client,显示通过配置方式注册Ribbon地址
+eureka:
+  client:
+    enabled: false
+
+##定义 user-service-provider Ribbon的服务地址
+##提供 RibbonLoadBalancerClient提供服务列表
+user-service-provider:
+  ribbon:
+    listOfServers: http://${provider.service.host}:${provider.service.port}
+
+##扩展IPing实现
+    NFLoadBalancerPingClassName: com.bxw.ribbon.client.ping.MyPing

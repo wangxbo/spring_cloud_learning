@@ -9,22 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>user-ribbon-client</artifactId>
-
+    <artifactId>hystrix-dashboard</artifactId>
 
     <dependencies>
+        <!-- 依赖 Hystrix Dashboard -->
         <dependency>
-            <groupId>com.bxw</groupId>
-            <artifactId>user-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-javanica</artifactId>
-            <version>RELEASE</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
         </dependency>
 
     </dependencies>
-
 
 </project>

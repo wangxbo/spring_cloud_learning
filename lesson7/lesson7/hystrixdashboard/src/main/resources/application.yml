@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: hystrix-dashboard
+server:
+  port: 10000
+##关闭Eureka Client,显示地通过配置方式注册Ribbon 服务地址
+eureka:
+  client:
+    enabled: false

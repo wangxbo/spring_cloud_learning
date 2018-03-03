@@ -1,5 +1,6 @@
 package com.bxw.ribbon.client.web.controller;
 
+import com.bxw.ribbon.client.hystrix.UserRibbonClientHystrixCommand;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Created by wxb on 2018/2/27.
@@ -22,6 +24,10 @@ public class UserRibbonController {
 
     @Value("${provider.service.name}")
     private String providerServiceName;
+    //providerServiceName 的值是 user-service-provider
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping("")
     public String index() throws IOException{
@@ -41,6 +47,12 @@ public class UserRibbonController {
 
     }
 
+
+    //访问的时候，可以看到服务提供方的
+    @GetMapping("/user-service-provider/user/list")
+    public Collection<User> getUsersList(){
+        return new UserRibbonClientHystrixCommand(providerServiceName, restTemplate).execute();
+    }
 
 
 }

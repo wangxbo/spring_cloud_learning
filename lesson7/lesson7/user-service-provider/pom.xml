@@ -18,7 +18,13 @@
             <artifactId>user-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-    </dependencies>
 
+        <!-- hystrix短路依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

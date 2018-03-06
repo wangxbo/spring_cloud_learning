@@ -5,6 +5,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,9 +23,11 @@ import java.util.Random;
  * Created by wxb on 2018/2/27.
  */
 @RestController
-public class UserServiceProviderController {
+public class UserServiceProviderController implements UserService{
 
     @Autowired
+    @Qualifier("inMemoryUserService")
+    // 实现 Bean ： InMemoryUserService
     private UserService userService;
 
     @Value("${server.port}")
@@ -31,10 +35,24 @@ public class UserServiceProviderController {
 
     private final static Random random = new Random();
 
-    @PostMapping("/user/save")
-    public boolean save(@RequestBody User user){
-        System.out.println("端口号为"+ port +"的服务器保存了一个用户" + user.toString());
+    //通过方法继承， URL映射: "/user/save"
+    @Override
+    public boolean saveUser(@RequestBody  User user) {
         return userService.saveUser(user);
+    }
+
+
+    @HystrixCommand(
+            commandProperties = {
+                 //设置操作时间为100毫秒
+                 @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100")
+            },
+            fallbackMethod = "fallbackForGetUsers"
+    )
+    //通过方法继承, URL 映射: "/user/find/all"
+    @Override
+    public List<User> findAll() {
+        return userService.findAll();
     }
 
     @HystrixCommand(
@@ -46,7 +64,7 @@ public class UserServiceProviderController {
             fallbackMethod = "fallbackForGetUsers"
     )
     @GetMapping("/user/list")
-    public Collection<User> getUsers() throws InterruptedException{
+    public List<User> getUsers() throws InterruptedException{
         long executeTime = random.nextInt(200);
         // 通过休眠来模拟执行时间
         System.out.println("Execute Time : " + executeTime + " ms");
@@ -58,8 +76,9 @@ public class UserServiceProviderController {
      * getUser的fallback方法
      * @return
      */
-    public Collection<User> fallbackForGetUsers(){
+    public List<User> fallbackForGetUsers(){
         return Collections.emptyList();
     }
+
 
 }

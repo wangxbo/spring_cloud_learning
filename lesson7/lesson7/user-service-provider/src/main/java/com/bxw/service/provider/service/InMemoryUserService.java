@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 内存实现
  * Created by wxb on 2018/2/27.
  */
-@Service
+@Service("inMemoryUserService")
 public class InMemoryUserService implements UserService {
 
     private Map<Long, User> map = new ConcurrentHashMap<>();
